@@ -1,27 +1,22 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+// This module is responsible for connect react and redux
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { getLogs } from '../../actions/logAction';
 
 import LogItem from './LogItem';
 import Preloader from '../layout/Preloader';
 
-const Logs = () => {
-  const [logs, setLogs] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+// action such as getLogs comes within props so needs to be destructured
+const Logs = ({ log: { logs, loading }, getLogs }) => {
   useEffect(() => {
     getLogs();
     // eslint-disable-next-line
   }, []);
 
-  const getLogs = async () => {
-    setLoading(true);
-    const res = await axios.get('/logs');
-
-    setLogs(res.data);
-    setLoading(false);
-  };
-
-  if (loading) {
+  // API request could take long... if the state was assigned as null then need extra condition
+  if (loading || logs === null) {
     return <Preloader></Preloader>;
   }
 
@@ -40,4 +35,20 @@ const Logs = () => {
   );
 };
 
-export default Logs;
+Logs.propTypes = {
+  log: PropTypes.object.isRequired,
+  getLogs: PropTypes.func.isRequired,
+};
+
+// To bring global state use -> connect() and it takes 2 things
+// MapState to props
+const mapStateToProps = (state) => ({
+  // In this instance, log is the entire state I defined earlier inside logReducer
+  // state.log comes from index.js combineReducers
+  log: state.log,
+  // If I wanted only pieces of whole state of log then...
+  // logs: state.log.logs
+  // loading: state.log.loading
+});
+
+export default connect(mapStateToProps, { getLogs })(Logs);
