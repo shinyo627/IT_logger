@@ -5,6 +5,8 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 
 import { addLog } from '../../actions/logAction';
 
+import TechSelectOptions from '../techs/TechSelectOptions';
+
 const AddLogModal = ({ addLog }) => {
   const [message, setMessage] = useState('');
   const [attention, setAttention] = useState(false);
@@ -62,9 +64,7 @@ const AddLogModal = ({ addLog }) => {
               <option value='' disabled>
                 Select Technicians
               </option>
-              <option value='John Doe'>John Doe</option>
-              <option value='Gregg Greggory'>Gregg Greggory</option>
-              <option value='Yoseob Shin'>Yoseob Shin</option>
+              <TechSelectOptions />
             </select>
           </div>
         </div>

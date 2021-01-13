@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
+import TechSelectOptions from '../techs/TechSelectOptions';
+
 import { clearCurrent, updateLog } from '../../actions/logAction';
 
 const EditLogModal = ({ log: { current }, clearCurrent, updateLog }) => {
@@ -68,9 +70,8 @@ const EditLogModal = ({ log: { current }, clearCurrent, updateLog }) => {
               <option value='' disabled>
                 Select Technicians
               </option>
-              <option value='John Doe'>John Doe</option>
-              <option value='Gregg Greggory'>Gregg Greggory</option>
-              <option value='Yoseob Shin'>Yoseob Shin</option>
+              {/* Somehow default slects are not the same on edit */}
+              <TechSelectOptions />
             </select>
           </div>
         </div>
